@@ -6,15 +6,20 @@
   <meta name="keywords" content="">
   <meta name="description" content="linux yum 命令详解 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="RPM二进制包安装软件，RPM包安装的最大的缺点也提到过，就是依赖性太强，一旦遇到依赖问题，则需要我们手动解决包之间具有依赖性的问题，今天为大家介绍一种可自动解决包之间依赖关系的安装方式：yum。 yum 全称“Yellow dog Updater, Modified”，是一个专门为了解决包的依赖关系而存在的软件包管理器。就好像 Windows 系统上我们通常可以通过各种软件管家实现软件的一键安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux yum 命令详解">
 <meta property="og:url" content="http://example.com/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RPM二进制包安装软件，RPM包安装的最大的缺点也提到过，就是依赖性太强，一旦遇到依赖问题，则需要我们手动解决包之间具有依赖性的问题，今天为大家介绍一种可自动解决包之间依赖关系的安装方式：yum。 yum 全称“Yellow dog Updater, Modified”，是一个专门为了解决包的依赖关系而存在的软件包管理器。就好像 Windows 系统上我们通常可以通过各种软件管家实现软件的一键安装">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/blog/myblog/source_posts/linux-yum-命令详解/1460000023704031">
+<meta property="og:image" content="http://example.com/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/blog/myblog/source_posts/linux-yum-命令详解/1460000023704032">
 <meta property="article:published_time" content="2021-08-03T08:18:22.000Z">
-<meta property="article:modified_time" content="2021-08-03T08:18:22.524Z">
+<meta property="article:modified_time" content="2021-08-03T08:33:50.306Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/blog/myblog/source_posts/linux-yum-命令详解/1460000023704031">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -240,7 +245,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(6)</small>
+                <small>(5)</small>
             
         </div>
     </li>
@@ -265,7 +270,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="6">
+<input type="hidden" id="yelog_site_posts_number" value="5">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -358,14 +363,6 @@
             <span class="post-date" title="2021-08-02 16:17:00">2021/08/02</span>
         </a>
         
-        <a  class="All "
-           href="/2021/08/02/hello-world/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2021-08-02 16:09:38">2021/08/02</span>
-        </a>
-        
         <div id="no-item-tips">
 
         </div>
@@ -396,7 +393,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-03 16:18:22'>2021-08-03 16:18</time>
+            Created At : <time class="date" title='Updated At: 2021-08-03 16:33:50'>2021-08-03 16:18</time>
         
     </div>
     <div class="article-meta">
@@ -418,7 +415,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80-yum%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="toc-text">一 yum源配置</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -434,7 +431,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>RPM二进制包安装软件，RPM包安装的最大的缺点也提到过，就是依赖性太强，一旦遇到依赖问题，则需要我们手动解决包之间具有依赖性的问题，今天为大家介绍一种可自动解决包之间依赖关系的安装方式：<code>yum</code>。</p>
+<p><code>yum</code> 全称“Yellow dog Updater, Modified”，是一个专门为了解决包的依赖关系而存在的软件包管理器。就好像 Windows 系统上我们通常可以通过各种软件管家实现软件的一键安装、升级和卸载，yum就是Linux 系统中的<code>一键安装工具</code>。<code>yum</code> 解决依赖关系的基本逻辑是：yum 在服务器端存有所有的 RPM 包，并将各个包之间的依赖关系记录在文件中，当管理员使用 yum 安装 RPM 包时，yum 会先从服务器端下载包的依赖性文件，通过分析此文件从服务器端一次性下载所有相关的 RPM 包并进行安装。</p>
+<h4 id="一-yum源配置"><a href="#一-yum源配置" class="headerlink" title="一 yum源配置"></a>一 yum源配置</h4><p>何为yum源，使用 yum 安装软件包之前，需指定好 yum 下载 RPM 包的位置，此位置称为 yum 源。换句话说，yum 源指的就是软件安装包的来源。</p>
+<p>使用 yum 安装软件时至少需要一个yum源。yum源既可以使用网络yum源，也可以将本地光盘作为yum源。接下来就给大家介绍配置网络yun源，个人习惯阿里云的源。</p>
+<p>网络 yum 源配置文件位于<code>/etc/yum.repos.d/</code>目录下，文件扩展名为”<em>.repo”（只要扩展名为 “</em>.repo” 的文件都是 yum 源的配置文件）,通常情况下我们关注 CentOS-Base.repo 文件即可：</p>
+<p><img src="/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/blog\myblog\source_posts\linux-yum-命令详解\1460000023704031"></p>
+<p>我们来看下这个文件里面都有什么内容：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi CentOS-Base.repo</span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<p><img src="/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/blog\myblog\source_posts\linux-yum-命令详解\1460000023704032" alt="image"></p>
+<ul>
+<li><code>[BaseOS]</code>：容器名称，一定要放在[]中</li>
+<li><code>name</code>：容器说明</li>
+<li><code>mirrorlist</code>：镜像站点</li>
+<li><code>baseurl</code>：yum 源服务器的地址。默认是 CentOS 官方的 yum 源服务器，是可以使用的。如果你觉得慢，则可以改成你喜欢的 yum 源地址</li>
+<li><code>enabled</code>：此容器是否生效，如果不写或写成 enabled 则表示此容器生效，写成 enable=0 则表示此容器不生效</li>
+<li><code>gpgcheck</code>：如果为 1 则表示 RPM 的数字证书生效；如果为 0 则表示 RPM 的数字证书不生效</li>
+<li><code>gpgkey</code>：数字证书的公钥文件保存位置。不用修改</li>
+</ul>
+<p>yum 源配置好之后，需要在本地清理并生成缓存。</p>
+<p>yum clean all </p>
+<p>yum makecache</p>
+<p>yum -y update</p>
+<p>yum intstall (包名)</p>
+<p>ps:在安装kbs中kubeadm 使用yum research kubeadm 查看发现有这个包，但是执行kubeadm发现显示命令不在。最后发现yum research 只是在远程仓库。本地并没有安装kubeadm，最后执行yum installl kubeadm 发现问题解决了。</p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
