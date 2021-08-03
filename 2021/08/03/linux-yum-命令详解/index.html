@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>安装k8s踩坑 | Hexo</title>
+  <title>linux yum 命令详解 | Hexo</title>
   <meta name="keywords" content="">
-  <meta name="description" content="安装k8s踩坑 | Hexo">
+  <meta name="description" content="linux yum 命令详解 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux yum 命令详解">
@@ -384,9 +384,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-安装k8s踩坑" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-linux-yum-命令详解" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">安装k8s踩坑</h1>
+        <h1 class="article-title">linux yum 命令详解</h1>
     
     <div class="article-meta">
         
@@ -396,7 +396,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-02 19:32:30'>2021-08-02 16:17</time>
+            Created At : <time class="date" title='Updated At: 2021-08-03 16:18:22'>2021-08-03 16:18</time>
         
     </div>
     <div class="article-meta">
@@ -434,55 +434,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <meta name="referrer" content="no-referrer"/>
-
-<p>1：<strong>内核升级出现的问题</strong></p>
-<p>更新了Linux内核后，重新启动后显示Kernel panic - not syncing Unable to mount root fs on unknown block(0,0)…</p>
-<p>由于对linux 内核不熟。查了下资料。这里做了总结：</p>
-<p>Linux 内核有 4 项工作：</p>
-<ol>
-<li><strong>内存管理：</strong>追踪记录有多少内存存储了什么以及存储在哪里</li>
-<li><strong>进程管理：</strong>确定哪些进程可以使用中央处理器（CPU）、何时使用以及持续多长时间</li>
-<li><strong>设备驱动程序：</strong>充当硬件与进程之间的调解程序/解释程序</li>
-<li><strong>系统调用和安全防护：</strong>从流程接受服务请求</li>
-</ol>
-<p>从不同层面来说：</p>
-<p>1.从技术层面讲，内核是硬件与软件之间的一个中间层。作用是将应用层序的请求传递给硬件，并充当底层驱动程序，对系统中的各种设备和组件进行寻址。</p>
-<p>2.从应用程序的层面讲，应用程序与硬件没有联系，只与内核有联系，内核是应用程序知道的层次中的最底层。在实际工作中内核抽象了相关细节。</p>
-<p>3.内核是一个资源管理程序。负责将可用的共享资源(CPU时间、磁盘空间、网络连接等)分配得到各个系统进程。</p>
-<p>4.内核就像一个库，提供了一组面向系统的命令。系统调用对于应用程序来说，就像调用普通函数一样。</p>
-<p>​                 <img src="https://docimg1.docs.qq.com/image/yVwiBS-YcOOYE4pD_u8DHA?w=574&h=840" alt="img">        </p>
-<p><strong>内核实现策略：</strong></p>
-<p>1.微内核。最基本的功能由中央内核（微内核）实现。所有其他的功能都委托给一些独立进程，这些进程通过明确定义的通信接口与中心内核通信。</p>
-<p>2.宏内核。内核的所有代码，包括子系统（如内存管理、文件管理、设备驱动程序）都打包到一个文件中。内核中的每一个函数都可以访问到内核中所有其他部分。目前支持模块的动态装卸(裁剪)。Linux内核就是基于这个策略实现的。</p>
-<p>fs/ —- VFS子系统是什么？</p>
-<p>在Linux中，不管是访问什么文件，也不管使用的是什么文件系统，基本都可以统一地使用诸如open(), read()和write()这样的接口。表面上看这些接口都很简单，但要基于不同的存储介质，适应不同的文件系统，并不是件容易的事。</p>
-<p>​                 <img src="https://docimg6.docs.qq.com/image/bPTiqsYLbE0wsgtiQZVK8A?w=695&h=190" alt="img">        </p>
-<p>这得归功于<strong>VFS</strong>（Virtual Filesystem），它提供的抽象让不同的文件系统表现出一致的行为。对用户空间和内核的其他部分，这些文件系统看起来都是一样的（比如都有文件和目录，都支持添加和删除操作），不用关注不同文件系统的具体细节。</p>
-<p>​                 <img src="https://docimg8.docs.qq.com/image/ZKC00RcVcCje3H8Mj98O8Q?w=509&h=516" alt="img">        </p>
-<p>解决办法：</p>
-<p>新建一台虚拟机。重新设置。</p>
-<p>2：<strong>Kubeadm集群初始化</strong></p>
-<p>（yaml配置信息问题）</p>
-<p>都最后一步初始化集群的时候</p>
-<p>报错信息：ERROR : kbs-master1 not founded</p>
-<p>跟着错误提示看</p>
-<p>vi /etc/hosts</p>
-<p>mater节点确实是kbs-master1</p>
-<p>再回来vim kubeadm-config.yaml</p>
-<p>名字没有问题</p>
-<p>​                 <img src="https://docimg4.docs.qq.com/image/DVzRzK6L-zUSGMdKDEr7OA?w=682&h=328" alt="img">        </p>
-<p>更换/etc/hosts文件里面的master名字试一下。还是报错</p>
-<p>​                 <img src="https://docimg3.docs.qq.com/image/jjtvwbTj6pBA54K_siYLOw?w=654&h=210" alt="img">        </p>
-<p>更换yaml配置里面的名字试一下。还是同样的错误</p>
-<p>​                 <img src="https://docimg3.docs.qq.com/image/jjtvwbTj6pBA54K_siYLOw?w=654&h=210" alt="img">        </p>
-<p>返回查看kubeadm-config.yaml文件</p>
-<p>name没有问题。就看Ip了。回来初始化教程。发现：如果不是高可用集群192.168.232.236:16443改为master01地址。不管后面，这句话的意思是去掉16443</p>
-<p>​                 <img src="https://docimg9.docs.qq.com/image/NHzesuWLDP5-PnQlVyH6fw?w=1142&h=93" alt="img">        </p>
-<p>更改kubeadm-config.yaml</p>
-<p>​                 <img src="https://docimg7.docs.qq.com/image/9GEvCgWVmXNHCW2dAFx3qQ?w=623&h=300" alt="img">        </p>
-<p> controlPlaneEndpoint：设置管控平面访问接口地址，也就是负载均衡上的VIP地址对应的DNS域名，以及端口。注意不要直接使用IP地址，否则后续维护要调整IP地址非常麻烦。我这个地方使用的只有一台master,两台node节点，所以不是高可用集群，</p>
-
+        
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
