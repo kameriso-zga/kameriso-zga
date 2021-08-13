@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hexo</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="Hexo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2021/08/13/docker/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803191543011.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803192120989.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803192333997.png">
+<meta property="og:image" content="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803193001795-16279902022581.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803193709025.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210804141705077.png">
+<meta property="article:published_time" content="2021-08-13T10:29:13.944Z">
+<meta property="article:modified_time" content="2021-08-13T10:30:00.071Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803191543011.png">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>John Doe</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="rss"
+               href="/atom.xml"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-rss"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/yelog"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="facebook"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-facebook"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+            <a title="instagram"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-instagram"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="reddit"
+               href="https://www.reddit.com/user/yelog/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-reddit"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="weibo"
+               href="http://weibo.com/u/2307534817"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-weibo"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="jianshu"
+               href="https://www.jianshu.com/u/ff56736de7cf"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-jianshu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="zhihu"
+               href="https://www.zhihu.com/people/jaytp/activities"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-zhihu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+            <a title="oschina"
+               href="https://my.oschina.net/yelog"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-oschina"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:jaytp@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=872336115&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="kugou"
+               href="https://www.kugou.com/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-kugou"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="neteasemusic"
+               href="https://music.163.com/#/user/home?id=88151013"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-neteasemusic"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(7)</small>
+            
+        </div>
+    </li>
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="7">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="All "
+           href="/2021/08/13/docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2021-08-13 18:29:13">2021/08/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/10/ipvs%E8%AF%A6%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ipvs详解">ipvs详解</span>
+            <span class="post-date" title="2021-08-10 14:21:57">2021/08/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/04/docker%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%92%8C%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker底层原理和关键技术">docker底层原理和关键技术</span>
+            <span class="post-date" title="2021-08-04 14:25:32">2021/08/04</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/03/linux-yum-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux yum 命令详解">linux yum 命令详解</span>
+            <span class="post-date" title="2021-08-03 16:18:22">2021/08/03</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/02/golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="golang单元测试总结">golang单元测试总结</span>
+            <span class="post-date" title="2021-08-02 19:32:50">2021/08/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/02/GO%E5%AE%9E%E7%8E%B0%E4%BB%BF%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%AB%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%91%E5%AD%98%E5%82%A8%E7%AC%94%E8%AE%B0%EF%BC%88%E5%BE%85%E8%A1%A5%E5%85%85%EF%BC%89/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="GO实现仿百度网盘，实现企业级别分布式云存储笔记（待补充）">GO实现仿百度网盘，实现企业级别分布式云存储笔记（待补充）</span>
+            <span class="post-date" title="2021-08-02 19:16:15">2021/08/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/02/%E5%AE%89%E8%A3%85k8s%E8%B8%A9%E5%9D%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="安装k8s踩坑">安装k8s踩坑</span>
+            <span class="post-date" title="2021-08-02 16:17:00">2021/08/02</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-docker" class="article article-type-post" itemscope itemprop="blogPost">
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2021-08-13 18:30:00'>2021-08-13 18:29</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-Docker%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一 Docker基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-docker%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">1.docker是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86"><span class="toc-text">2.容器技术原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A%E9%95%9C%E5%83%8F%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E4%BB%93%E5%BA%93%EF%BC%8C%E5%BD%BB%E5%BA%95%E6%8E%8C%E6%8F%A1-Docker-%E6%9E%B6%E6%9E%84%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="toc-text">二核心概念：镜像、容器、仓库，彻底掌握 Docker 架构核心设计理念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%95%9C%E5%83%8F"><span class="toc-text">1.镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%B9%E5%99%A8"><span class="toc-text">2.容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%93%E5%BA%93"><span class="toc-text">3.仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%B8%89%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-text">4.三者之间的联系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-docker%E6%9E%B6%E6%9E%84"><span class="toc-text">5.docker架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-docker%E9%87%8D%E8%A6%81%E7%BB%84%E4%BB%B6"><span class="toc-text">6.docker重要组件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E5%AE%B9%E5%99%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-text">四容器基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%B9%E5%99%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">1.容器是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%B9%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">2.容器生命周期</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E7%94%9F%E4%BA%A7%E4%B8%AD%E7%BC%96%E5%86%99%E6%9C%80%E4%BC%98dockerfile"><span class="toc-text">五生产中编写最优dockerfile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E5%9F%BA%E4%BA%8E%E5%86%85%E6%A0%B8%E7%9A%84%E5%BC%B1%E9%9A%94%E7%A6%BB%E7%B3%BB%E7%BB%9F%E4%BF%9D%E9%9A%9C%E5%AE%89%E5%85%A8"><span class="toc-text">六基于内核的弱隔离系统保障安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-docker%E5%92%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">1.docker和虚拟机的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Docker-%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-text">2.Docker 容器的安全问题</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一-Docker基本概念"><a href="#一-Docker基本概念" class="headerlink" title="一 Docker基本概念"></a>一 Docker基本概念</h1><h2 id="1-docker是什么"><a href="#1-docker是什么" class="headerlink" title="1.docker是什么"></a>1.docker是什么</h2><p>Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。</p>
+<h2 id="2-容器技术原理"><a href="#2-容器技术原理" class="headerlink" title="2.容器技术原理"></a>2.容器技术原理</h2><p>（1）chroot</p>
+<p>chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程的根目录，这与容器非常相似。chroot 是在 Unix 和 Linux 系统的一个操作，针对正在运作的软件行程和它的子进程，改变它外显的根目录。一个运行在这个环境下，经由 chroot 设置根目录的程序，它不能够对这个指定根目录之外的文件进行访问动作，不能读取，也不能更改它的内容。chroot 就是可以改变某进程的根目录，使这个程序不能访问目录之外的其他目录，这个跟我们在一个容器中是很相似的。</p>
+<p>（2）namespace</p>
+<p>Namespace 是 Linux 内核的一项功能，该功能对内核资源进行隔离，使得容器中的进程都可以在单独的命名空间中运行，并且只可以访问当前容器命名空间的资源。Namespace 可以隔离进程 ID、主机名、用户 ID、文件名、网络访问和进程间通信等相关资源。</p>
+<p>（3）cgroups</p>
+<p>Cgroups 是一种 Linux 内核功能，可以限制和隔离进程的资源使用情况（CPU、内存、磁盘 I/O、网络等）。在容器的实现中，Cgroups 通常用来限制容器的 CPU 和内存等资源的使用。</p>
+<p>(4)联合文件系统</p>
+<p>联合文件系统，又叫 UnionFS，是一种通过创建文件层进程操作的文件系统，因此，联合文件系统非常轻快。Docker 使用联合文件系统为容器提供构建层，使得容器可以实现写时复制以及镜像的分层构建和存储。常用的联合文件系统有 AUFS、Overlay 和 Devicemapper 等。</p>
+<h1 id="二核心概念：镜像、容器、仓库，彻底掌握-Docker-架构核心设计理念"><a href="#二核心概念：镜像、容器、仓库，彻底掌握-Docker-架构核心设计理念" class="headerlink" title="二核心概念：镜像、容器、仓库，彻底掌握 Docker 架构核心设计理念"></a>二核心概念：镜像、容器、仓库，彻底掌握 Docker 架构核心设计理念</h1><h2 id="1-镜像"><a href="#1-镜像" class="headerlink" title="1.镜像"></a>1.镜像</h2><p>镜像是什么呢？通俗地讲，它是一个<strong>只读的文件和文件夹组合</strong>。它包含了容器运行时所需要的所有基础文件和配置信息，是容器启动的基础。所以你想启动一个容器，那首先必须要有一个镜像。镜像是 Docker 容器启动的先决条件。</p>
+<h2 id="2-容器"><a href="#2-容器" class="headerlink" title="2.容器"></a>2.容器</h2><p>容器是什么呢？容器是 Docker 的另一个核心概念。通俗地讲，容器是镜像的运行实体。镜像是<strong>静态的只读文件</strong>，而容器带有运行时需要的可写文件层，并且容器中的进程属于运行状态。即容器运行着真正的应用进程。容器有初建、运行、停止、暂停和删除五种状态。</p>
+<h2 id="3-仓库"><a href="#3-仓库" class="headerlink" title="3.仓库"></a>3.仓库</h2><p>Docker 的镜像仓库类似于代码仓库，用来存储和分发 Docker 镜像。镜像仓库分为公共镜像仓库和私有镜像仓库。</p>
+<h2 id="4-三者之间的联系"><a href="#4-三者之间的联系" class="headerlink" title="4.三者之间的联系"></a>4.三者之间的联系</h2><p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803191543011.png" alt="image-20210803191543011"></p>
+<p>镜像是容器的基石，容器是由镜像创建的。一个镜像可以创建多个容器，容器是镜像运行的实体。仓库就非常好理解了，就是用来存放和分发镜像的。</p>
+<h2 id="5-docker架构"><a href="#5-docker架构" class="headerlink" title="5.docker架构"></a>5.docker架构</h2><p>OCI全称为开放容器标准（Open Container Initiative），它是一个轻量级、开放的治理结构。OCI组织在 Linux 基金会的大力支持下，于 2015 年 6 月份正式注册成立。基金会旨在为用户围绕工业化容器的格式和镜像运行时，制定一个开放的容器标准。目前主要有两个标准文档：容器运行时标准 （runtime spec）和容器镜像标准（image spec）</p>
+<p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803192120989.png" alt="image-20210803192120989"></p>
+<p>我们可以看到，Docker 整体架构采用 C/S（客户端 / 服务器）模式，主要由客户端和服务端两大部分组成。客户端负责发送操作指令，服务端负责接收和处理指令。客户端和服务端通信有多种方式，既可以在同一台机器上通过UNIX套接字通信，也可以通过网络连接远程通信。</p>
+<p>下面我逐一介绍客户端和服务端。</p>
+<p>Docker 客户端<br>Docker 客户端其实是一种泛称。其中 docker 命令是 Docker 用户与 Docker 服务端交互的主要方式。除了使用 docker 命令的方式，还可以使用直接请求 REST API 的方式与 Docker 服务端交互，甚至还可以使用各种语言的 SDK 与 Docker 服务端交互。</p>
+<p>Docker 服务端<br>Docker 服务端是 Docker 所有后台服务的统称。其中 dockerd 是一个非常重要的后台管理进程，它负责响应和处理来自 Docker 客户端的请求，然后将客户端的请求转化为 Docker 的具体操作。例如镜像、容器、网络和挂载卷等具体对象的操作和管理。</p>
+<h2 id="6-docker重要组件"><a href="#6-docker重要组件" class="headerlink" title="6.docker重要组件"></a>6.docker重要组件</h2><p><strong>runC</strong>是 Docker 官方按照 OCI 容器运行时标准的一个实现。通俗地讲，runC 是一个用来运行容器的轻量级工具，是真正用来运行容器的。</p>
+<p><strong>containerd</strong>是 Docker <img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803192333997.png" alt="image-20210803192333997">服务端的一个核心组件，它是从dockerd中剥离出来的 ，它的诞生完全遵循 OCI 标准，是容器标准化后的产物。containerd通过 containerd-shim 启动并管理 runC，可以说containerd真正管理了容器的生命周期。</p>
+<h1 id="四容器基本操作"><a href="#四容器基本操作" class="headerlink" title="四容器基本操作"></a>四容器基本操作</h1><h2 id="1-容器是什么"><a href="#1-容器是什么" class="headerlink" title="1.容器是什么"></a>1.容器是什么</h2><p>容器是基于镜像创建的可运行实例，并且单独存在，一个镜像可以创建出多个容器。运行容器化环境时，实际上是在容器内部创建该文件系统的读写副本。 这将添加一个容器层，该层允许修改镜像的整个副本。如图 1 所示。</p>
+<p><img src="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png" alt="image.png"></p>
+<h2 id="2-容器生命周期"><a href="#2-容器生命周期" class="headerlink" title="2.容器生命周期"></a>2.容器生命周期</h2><p>created：初建状态</p>
+<p>running：运行状态</p>
+<p>stopped：停止状态</p>
+<p>paused： 暂停状态</p>
+<p>deleted：删除状态</p>
+<h1 id="五生产中编写最优dockerfile"><a href="#五生产中编写最优dockerfile" class="headerlink" title="五生产中编写最优dockerfile"></a>五生产中编写最优dockerfile</h1><p>Dockerfile 书写原则<br>遵循以下 Dockerfile 书写原则，不仅可以使得我们的 Dockerfile 简洁明了，让协作者清楚地了解镜像的完整构建流程，还可以帮助我们减少镜像的体积，加快镜像构建的速度和分发速度。</p>
+<p>（1）单一职责<br>由于容器的本质是进程，一个容器代表一个进程，因此不同功能的应用应该尽量拆分为不同的容器，每个容器只负责单一业务进程。</p>
+<p>（2）提供注释信息<br>Dockerfile 也是一种代码，我们应该保持良好的代码编写习惯，晦涩难懂的代码尽量添加注释，让协作者可以一目了然地知道每一行代码的作用，并且方便扩展和使用。</p>
+<p>（3）保持容器最小化<br>应该避免安装无用的软件包，比如在一个 nginx 镜像中，我并不需要安装 vim 、gcc 等开发编译工具。这样不仅可以加快容器构建速度，而且可以避免镜像体积过大。</p>
+<p>（4）合理选择基础镜像<br>容器的核心是应用，因此只要基础镜像能够满足应用的运行环境即可。例如一个Java类型的应用运行时只需要JRE，并不需要JDK，因此我们的基础镜像只需要安装JRE环境即可。</p>
+<p>（5）使用 .dockerignore 文件<br>在使用git时，我们可以使用.gitignore文件忽略一些不需要做版本管理的文件。同理，使用.dockerignore文件允许我们在构建时，忽略一些不需要参与构建的文件，从而提升构建效率。.dockerignore的定义类似于.gitignore。</p>
+<p>.dockerignore的本质是文本文件，Docker 构建时可以使用换行符来解析文件定义，每一行可以忽略一些文件或者文件夹。具体使用方式如下：</p>
+<p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803193001795-16279902022581.png" alt="image-20210803193001795"></p>
+<p>Docker 构建过程中，每一条 Dockerfile 指令都会提交为一个镜像层，下一条指令都是基于上一条指令构建的。如果构建时发现要构建的镜像层的父镜像层已经存在，并且下一条命令使用了相同的指令，即可命中构建缓存。</p>
+<p>Docker 构建时判断是否需要使用缓存的规则如下：</p>
+<p>从当前构建层开始，比较所有的子镜像，检查所有的构建指令是否与当前完全一致，如果不一致，则不使用缓存；</p>
+<p>一般情况下，只需要比较构建指令即可判断是否需要使用缓存，但是有些指令除外（例如ADD和COPY）；</p>
+<p>对于ADD和COPY指令不仅要校验命令是否一致，还要为即将拷贝到容器的文件计算校验和（根据文件内容计算出的一个数值，如果两个文件计算的数值一致，表示两个文件内容一致 ），命令和校验和完全一致，才认为命中缓存。</p>
+<p>因此，基于 Docker 构建时的缓存特性，我们可以把不轻易改变的指令放到 Dockerfile 前面（例如安装软件包），而可能经常发生改变的指令放在 Dockerfile 末尾（例如编译应用程序）。</p>
+<p>例如，我们想要定义一些环境变量并且安装一些软件包，可以按照如下顺序编写 Dockerfile：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FROM centos:7</span><br><span class="line"># 设置环境变量指令放前面</span><br><span class="line">ENV PATH /usr/local/bin:$PATH</span><br><span class="line"># 安装软件指令放前面</span><br><span class="line">RUN yum install -y make</span><br><span class="line"># 把业务软件的配置,版本等经常变动的步骤放最后</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>按照上面原则编写的 Dockerfile 在构建镜像时，前面步骤命中缓存的概率会增加，可以大大缩短镜像构建时间</p>
+<p>（7）正确设置时区</p>
+<p>8）使用国内软件源加快镜像构建速度</p>
+<p>首先在容器构建目录创建文件 CentOS7-Base-163.repo</p>
+<p>然后在 Dockerfile 中添加如下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RUN yum install -y make net-tools</span><br></pre></td></tr></table></figure>
+
+<p>而不应该写成这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN yum install -y make</span><br><span class="line">RUN yum install -y net-tools</span><br></pre></td></tr></table></figure>
+
+<p>Dockerfile 指令书写建议<br>下面是我们常用的一些指令，这些指令对于刚接触 Docker 的人来说会非常容易出错，下面我对这些指令的书写建议详细讲解一下。</p>
+<p>（1）RUN<br>RUN指令在构建时将会生成一个新的镜像层并且执行RUN指令后面的内容。</p>
+<p>使用RUN指令时应该尽量遵循以下原则：</p>
+<p>当RUN指令后面跟的内容比较复杂时，建议使用反斜杠（\） 结尾并且换行；</p>
+<p>RUN指令后面的内容尽量按照字母顺序排序，提高可读性。</p>
+<p>例如，我想在官方的 CentOS 镜像下安装一些软件，一个建议的 Dockerfile 指令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM centos:7</span><br><span class="line">RUN yum install -y automake \</span><br><span class="line">                   curl \</span><br><span class="line">                   python \</span><br><span class="line">                   vim</span><br></pre></td></tr></table></figure>
+
+<p>（2）CMD 和 ENTRYPOINT<br>CMD和ENTRYPOINT指令都是容器运行的命令入口，这两个指令使用中有很多相似的地方，但是也有一些区别。</p>
+<p>这两个指令的相同之处，CMD和ENTRYPOINT的基本使用格式分为两种。</p>
+<p>第一种为CMD/ENTRYPOINT[“command” , “param”]。这种格式是使用 Linux 的exec实现的， 一般称为exec模式，这种书写格式为CMD/ENTRYPOINT后面跟 json 数组，也是Docker 推荐的使用格式。</p>
+<p>另外一种格式为CMD/ENTRYPOINTcommand param ，这种格式是基于 shell 实现的， 通常称为shell模式。当使用shell模式时，Docker 会以 /bin/sh -c command 的方式执行命令。</p>
+<p>使用 exec 模式启动容器时，容器的 1 号进程就是 CMD/ENTRYPOINT 中指定的命令，而使用 shell 模式启动容器时相当于我们把启动命令放在了 shell 进程中执行，等效于执行 /bin/sh -c “task command” 命令。因此 shell 模式启动的进程在容器中实际上并不是 1 号进程。</p>
+<p>这两个指令的区别：</p>
+<p>Dockerfile 中如果使用了ENTRYPOINT指令，启动 Docker 容器时需要使用 –entrypoint 参数才能覆盖 Dockerfile 中的ENTRYPOINT指令 ，而使用CMD设置的命令则可以被docker run后面的参数直接覆盖。</p>
+<p>ENTRYPOINT指令可以结合CMD指令使用，也可以单独使用，而CMD指令只能单独使用。</p>
+<p>看到这里你也许会问，我什么时候应该使用ENTRYPOINT,什么时候使用CMD呢？</p>
+<p>如果你希望你的镜像足够灵活，推荐使用CMD指令。如果你的镜像只执行单一的具体程序，并且不希望用户在执行docker run时覆盖默认程序，建议使用ENTRYPOINT。</p>
+<p>最后再强调一下，无论使用CMD还是ENTRYPOINT，都尽量使用exec模式。</p>
+<p>（3）ADD 和 COPY<br>ADD和COPY指令功能类似，都是从外部往容器内添加文件。但是COPY指令只支持基本的文件和文件夹拷贝功能，ADD则支持更多文件来源类型，比如自动提取 tar 包，并且可以支持源文件为 URL 格式。</p>
+<p>那么在日常应用中，我们应该使用哪个命令向容器里添加文件呢？你可能在想，既然ADD指令支持的功能更多，当然应该使用ADD指令了。然而事实恰恰相反，我更推荐你使用COPY指令，因为COPY指令更加透明，仅支持本地文件向容器拷贝，而且使用COPY指令可以更好地利用构建缓存，有效减小镜像体积。</p>
+<p>当你想要使用ADD向容器中添加 URL 文件时，请尽量考虑使用其他方式替代。例如你想要在容器中安装 memtester（一种内存压测工具），你应该避免使用以下格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ADD http://pyropus.ca/software/memtester/old-versions/memtester-4.3.0.tar.gz /tmp/</span><br><span class="line">RUN tar -xvf /tmp/memtester-4.3.0.tar.gz -C /tmp</span><br><span class="line">RUN make -C /tmp/memtester-4.3.0 &amp;&amp; make -C /tmp/memtester-4.3.0 install</span><br></pre></td></tr></table></figure>
+
+<p>推荐：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RUN wget -O /tmp/memtester-4.3.0.tar.gz http://pyropus.ca/software/memtester/old-versions/memtester-4.3.0.tar.gz \</span><br><span class="line">&amp;&amp; tar -xvf /tmp/memtester-4.3.0.tar.gz -C /tmp \</span><br><span class="line">&amp;&amp; make -C /tmp/memtester-4.3.0 &amp;&amp; make -C /tmp/memtester-4.3.0 install</span><br></pre></td></tr></table></figure>
+
+<p>（4）WORKDIR<br>为了使构建过程更加清晰明了，推荐使用 WORKDIR 来指定容器的工作路径，应该尽量避免使用 RUN cd /work/path &amp;&amp; do some work 这样的指令。</p>
+<h1 id="六基于内核的弱隔离系统保障安全"><a href="#六基于内核的弱隔离系统保障安全" class="headerlink" title="六基于内核的弱隔离系统保障安全"></a>六基于内核的弱隔离系统保障安全</h1><h2 id="1-docker和虚拟机的区别"><a href="#1-docker和虚拟机的区别" class="headerlink" title="1.docker和虚拟机的区别"></a>1.docker和虚拟机的区别</h2><p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803193709025.png" alt="image-20210803193709025"></p>
+<p>从图 1 可以看出，虚拟机是通过管理系统(Hypervisor)模拟出 CPU、内存、网络等硬件，然后在这些模拟的硬件上创建客户内核和操作系统。这样做的好处就是虚拟机有自己的内核和操作系统，并且硬件都是通过虚拟机管理系统模拟出来的，用户程序无法直接使用到主机的操作系统和硬件资源，因此虚拟机也对隔离性和安全性有着更好的保证。</p>
+<p>而 Docker 容器则是通过 Linux 内核的 Namespace 技术实现了文件系统、进程、设备以及网络的隔离，然后再通过 Cgroups 对 CPU、 内存等资源进行限制，最终实现了容器之间相互不受影响，由于容器的隔离性仅仅依靠内核来提供，因此容器的隔离性也远弱于虚拟机。容器与虚拟机相比，容器的性能损耗非常小，并且镜像也非常小，而且在业务快速开发和迭代的今天，容器秒级的启动等特性也非常匹配业务快速迭代的业务场景。</p>
+<h2 id="2-Docker-容器的安全问题"><a href="#2-Docker-容器的安全问题" class="headerlink" title="2.Docker 容器的安全问题"></a>2.Docker 容器的安全问题</h2><p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210804141705077.png" alt="image-20210804141705077"></p>
+<p>七容器监控：容器监控原理及 cAdvisor 的安装与使用</p>
+<p>监控原理</p>
+<p>我们知道 Docker 是基于 Namespace、Cgroups 和联合文件系统实现的。其中 Cgroups 不仅可以用于容器资源的限制，还可以提供容器的资源使用率。无论何种监控方案的实现，底层数据都来源于 Cgroups。</p>
+<p>Cgroups 的工作目录为/sys/fs/cgroup，/sys/fs/cgroup目录下包含了 Cgroups 的所有内容。Cgroups包含很多子系统，可以用来对不同的资源进行限制。例如对CPU、内存、PID、磁盘 IO等资源进行限制和监控。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">💰</a>
+</p>
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>Help us with donation</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">alipay</label></span><span><label><input type="radio" name="pay" value="weixin">weixin</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

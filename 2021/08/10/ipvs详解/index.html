@@ -6,17 +6,25 @@
   <meta name="keywords" content="">
   <meta name="description" content="ipvs详解 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="ipvs含义 IPVS基本上是一种高效的Layer-4交换机，它提供负载平衡的功能。当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS不用检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一">
+<meta name="description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ipvs详解">
-<meta property="og:url" content="http://example.com/2021/08/10/ipvs%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2021/08/13/docker/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="ipvs含义 IPVS基本上是一种高效的Layer-4交换机，它提供负载平衡的功能。当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS不用检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一">
+<meta property="og:description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-10T06:21:57.000Z">
-<meta property="article:modified_time" content="2021-08-10T09:07:58.153Z">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803191543011.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803192120989.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803192333997.png">
+<meta property="og:image" content="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803193001795-16279902022581.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803193709025.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210804141705077.png">
+<meta property="article:published_time" content="2021-08-13T10:29:13.944Z">
+<meta property="article:modified_time" content="2021-08-13T10:30:00.071Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803191543011.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -242,7 +250,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(6)</small>
+                <small>(7)</small>
             
         </div>
     </li>
@@ -267,7 +275,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="6">
+<input type="hidden" id="yelog_site_posts_number" value="7">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -319,6 +327,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="All "
+           href="/2021/08/13/docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2021-08-13 18:29:13">2021/08/13</span>
+        </a>
         
         <a  class="All "
            href="/2021/08/10/ipvs%E8%AF%A6%E8%A7%A3/"
@@ -398,7 +414,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-10 17:07:58'>2021-08-10 14:21</time>
+            Created At : <time class="date" title='Updated At: 2021-08-13 17:05:19'>2021-08-10 14:21</time>
         
     </div>
     <div class="article-meta">
@@ -420,7 +436,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ipvs%E5%90%AB%E4%B9%89"><span class="toc-text">ipvs含义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">1.工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AFLVS"><span class="toc-text">2.什么是LVS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-IPVS-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.IPVS 代理模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ipvs%E5%92%8Ciptables%E5%8C%BA%E5%88%AB"><span class="toc-text">4.ipvs和iptables区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ipvs-kube-proxy%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-text">5.ipvs kube-proxy原理分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-text">6.总结</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -436,20 +452,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>ipvs含义</p>
-<p>IPVS基本上是一种高效的Layer-4交换机，它提供<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9F%E8%BD%BD%E5%B9%B3%E8%A1%A1">负载平衡</a>的功能。当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS不用检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一些应用中后端的服务器可能功能不一，有的是提供HTML文档的Web服务器，有的是提供图片的Web服务器，有的是提供CGI的Web服务器。这时，就需要基于内容请求分发 (Content-Based Request Distribution)，同时基于内容请求分发可以提高后端服务器上访问的局部性。</p>
-<p>1.工作原理</p>
-<p>当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS无法检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一些应用中后端&gt;的服务器可能功能不一，有的是提供HTML文档的Web服务器，有的是提供图片的Web服务器，有的是提供CGI的Web服务器。这时，就需要基于内容请求分发 (Content-Based Request Distribution)，同时基于内容请求分发可以提高后端服务器上访问的局部性。</p>
+        <h1 id="ipvs含义"><a href="#ipvs含义" class="headerlink" title="ipvs含义"></a>ipvs含义</h1><p>IPVS基本上是一种高效的Layer-4交换机，它提供<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9F%E8%BD%BD%E5%B9%B3%E8%A1%A1">负载平衡</a>的功能。当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS不用检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一些应用中后端的服务器可能功能不一，有的是提供HTML文档的Web服务器，有的是提供图片的Web服务器，有的是提供CGI的Web服务器。这时，就需要基于内容请求分发 (Content-Based Request Distribution)，同时基于内容请求分发可以提高后端服务器上访问的局部性。</p>
+<h2 id="1-工作原理"><a href="#1-工作原理" class="headerlink" title="1.工作原理"></a>1.工作原理</h2><p>当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS无法检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一些应用中后端&gt;的服务器可能功能不一，有的是提供HTML文档的Web服务器，有的是提供图片的Web服务器，有的是提供CGI的Web服务器。这时，就需要基于内容请求分发 (Content-Based Request Distribution)，同时基于内容请求分发可以提高后端服务器上访问的局部性。</p>
 <p>上面已经说了IPVS是LVS的关键，因为LVS的IP负载平衡技术就是通过IPVS模块来实现的，IPVS是LVS集群系统的核心软件，它的主要作用是：安装在Director Server上，同时&gt;在Director Server上虚拟出一个IP地址，用户必须通过这个虚拟的IP地址访问服务。这个虚拟IP一般称为LVS的VIP，即Virtual IP。访问的请求首先经过VIP到达负载调度器，然&gt;后由负载调度器从Real Server列表中选取一个服务节点响应用户的请求。</p>
-<p>2.什么是LVS</p>
-<p>提到IPVS就不得不提<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/LVS">LVS</a>（Linux Virtual Server），虚拟服务器是一个高度可扩展性和高可用性的服务器，建立在一个集群的服务器中。服务器集群的架构对用户是完全透明的，并且用户使用起来感觉它只有一个高性能<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%99%9A%E6%8B%9F%E6%9C%8D%E5%8A%A1%E5%99%A8/5799459">虚拟服务器</a>。</p>
+<h2 id="2-什么是LVS"><a href="#2-什么是LVS" class="headerlink" title="2.什么是LVS"></a>2.什么是LVS</h2><p>提到IPVS就不得不提<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/LVS">LVS</a>（Linux Virtual Server），虚拟服务器是一个高度可扩展性和高可用性的服务器，建立在一个集群的服务器中。服务器集群的架构对用户是完全透明的，并且用户使用起来感觉它只有一个高性能<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%99%9A%E6%8B%9F%E6%9C%8D%E5%8A%A1%E5%99%A8/5799459">虚拟服务器</a>。</p>
 <p>真正的服务器和负载平衡器之间通过<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%AB%98%E9%80%9F%E5%B1%80%E5%9F%9F%E7%BD%91/2172818">高速局域网</a>或地理上分散的广域网可以相互连接。负载平衡器可以将请求调度到不同的服务器并将并行的集群服务显示的像在一个单一的IP地址上的一个虚拟的服务，请求调度可以使用IP负载平衡技术或应用级负载平衡技术。系统的可扩展性是通过透明地添加或删除集群中的节点来实现的。通过检测节点或守护进程的失败和适当地重新配置系统提供高可用性。</p>
-<p>3.ipvs和iptables区别</p>
+<h2 id="3-IPVS-代理模式"><a href="#3-IPVS-代理模式" class="headerlink" title="3.IPVS 代理模式"></a>3.IPVS 代理模式</h2><p>在 <code>ipvs</code> 模式下，kube-proxy 监视 Kubernetes 服务和端点，调用 <code>netlink</code> 接口相应地创建 IPVS 规则， 并定期将 IPVS 规则与 Kubernetes 服务和端点同步。 该控制循环可确保IPVS 状态与所需状态匹配。访问服务时，IPVS 将流量定向到后端Pod之一。</p>
+<p>IPVS代理模式基于类似于 iptables 模式的 netfilter 挂钩函数， 但是使用哈希表作为基础数据结构，并且在内核空间中工作。 这意味着，与 iptables 模式下的 kube-proxy 相比，IPVS 模式下的 kube-proxy 重定向通信的延迟要短，并且在同步代理规则时具有更好的性能。 与其他代理模式相比，IPVS 模式还支持更高的网络流量吞吐量。</p>
+<p>IPVS 提供了更多选项来平衡后端 Pod 的流量。 这些是：</p>
 <ul>
-<li>ipvs 为大型集群提供了更好的可扩展性和性能</li>
-<li>ipvs 支持比 iptables 更复杂的复制均衡算法（最小负载、最少连接、加权等等）</li>
-<li>ipvs 支持服务器健康检查和连接重试等功能</li>
-<li></li>
+<li><code>rr</code>：轮替（Round-Robin）</li>
+<li><code>lc</code>：最少链接（Least Connection），即打开链接数量最少者优先</li>
+<li><code>dh</code>：目标地址哈希（Destination Hashing）</li>
+<li><code>sh</code>：源地址哈希（Source Hashing）</li>
+<li><code>sed</code>：最短预期延迟（Shortest Expected Delay）</li>
+<li><code>nq</code>：从不排队（Never Queue）</li>
+</ul>
+<blockquote>
+<p><strong>说明：</strong></p>
+<p>要在 IPVS 模式下运行 kube-proxy，必须在启动 kube-proxy 之前使 IPVS 在节点上可用。</p>
+<p>当 kube-proxy 以 IPVS 代理模式启动时，它将验证 IPVS 内核模块是否可用。 如果未检测到 IPVS 内核模块，则 kube-proxy 将退回到以 iptables 代理模式运行。</p>
+</blockquote>
+<h2 id="4-ipvs和iptables区别"><a href="#4-ipvs和iptables区别" class="headerlink" title="4.ipvs和iptables区别"></a>4.ipvs和iptables区别</h2><ul>
+<li><p>ipvs 为大型集群提供了更好的可扩展性和性能</p>
+</li>
+<li><p>ipvs 支持比 iptables 更复杂的复制均衡算法（最小负载、最少连接、加权等等）</p>
+</li>
+<li><p>ipvs 支持服务器健康检查和连接重试等功</p>
+</li>
+<li><h2 id="5-ipvs-kube-proxy原理分析："><a href="#5-ipvs-kube-proxy原理分析：" class="headerlink" title="5.ipvs kube-proxy原理分析："></a>5.ipvs kube-proxy原理分析：</h2><p>先前基于iptables规则表的DNAT-&gt;SNAT方式来处理外部客户端到k8s集群pod内的流量<br> 和集群内部流量(cluster-ip到pod ip)，无需在宿主机上管理cluster-ip都由iptables来进行<br> 管理。</p>
+<p>使用IPVS是需要对vs(虚拟服务也就是vip)进行管理，由于IPVS的DNAT钩子挂在<br> INPUT链上，因此必须要让内核识别 VIP(cluster-ip) 是本机的 IP。k8s 通过设置将<br> service cluster ip 绑定到虚拟网卡kube-ipvs0，其中下面的10.96.x.x都是VIP，也就<br> 是cluster-ip。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11025663-9f8434a93bc6ec27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/909/format/webp" alt="img"></p>
+<p>ipvs 会使用 iptables 进行包过滤、SNAT、masquared(伪装)。具体来说，ipvs 将使用<br> ipset来存储需要DROP或masquared的流量的源或目标地址，以确保 iptables 规则的<br> 数量是恒定的，这样我们就不需要关心我们有多少服务了。</p>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6.总结"></a>6.总结</h2><p>这种的LB方式和之前分析的swarm集群中LB类似都是用lvs来直接进行负载，这比起原先使用iptables来进行负载在性能上要好的多，同时也比较清晰友好。总之一句话流量都是要先经过iptables清理一遍然后交给4层的lvs进行负载。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11025663-3395c8a02bb1c76d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080/format/webp" alt="img"></p>
+</li>
 </ul>
 
       
