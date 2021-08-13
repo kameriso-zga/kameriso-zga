@@ -2,29 +2,29 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hexo</title>
+  <title>docker基础 | Hexo</title>
   <meta name="keywords" content="">
-  <meta name="description" content="Hexo">
+  <meta name="description" content="docker基础 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2021/08/13/docker/index.html">
+<meta property="og:title" content="docker基础">
+<meta property="og:url" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803191543011.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803192120989.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803192333997.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803191543011.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803192120989.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803192333997.png">
 <meta property="og:image" content="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803193001795-16279902022581.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803193709025.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210804141705077.png">
-<meta property="article:published_time" content="2021-08-13T10:29:13.944Z">
-<meta property="article:modified_time" content="2021-08-13T10:30:00.071Z">
+<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803193001795-16279902022581.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803193709025.png">
+<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210804141705077.png">
+<meta property="article:published_time" content="2021-08-13T10:33:49.000Z">
+<meta property="article:modified_time" content="2021-08-13T10:34:42.755Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/13/docker/blog/myblog/source_posts/docker/image-20210803191543011.png">
+<meta name="twitter:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803191543011.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -329,11 +329,11 @@
     <nav id="title-list-nav">
         
         <a  class="All "
-           href="/2021/08/13/docker/"
+           href="/2021/08/13/docker%E5%9F%BA%E7%A1%80/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2021-08-13 18:29:13">2021/08/13</span>
+            <span class="post-title" title="docker基础">docker基础</span>
+            <span class="post-date" title="2021-08-13 18:33:49">2021/08/13</span>
         </a>
         
         <a  class="All "
@@ -402,7 +402,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-docker" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-docker基础" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">docker基础</h1>
     
     <div class="article-meta">
         
@@ -412,7 +414,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-13 18:30:00'>2021-08-13 18:29</time>
+            Created At : <time class="date" title='Updated At: 2021-08-13 18:34:42'>2021-08-13 18:33</time>
         
     </div>
     <div class="article-meta">
@@ -462,16 +464,16 @@
 <h1 id="二核心概念：镜像、容器、仓库，彻底掌握-Docker-架构核心设计理念"><a href="#二核心概念：镜像、容器、仓库，彻底掌握-Docker-架构核心设计理念" class="headerlink" title="二核心概念：镜像、容器、仓库，彻底掌握 Docker 架构核心设计理念"></a>二核心概念：镜像、容器、仓库，彻底掌握 Docker 架构核心设计理念</h1><h2 id="1-镜像"><a href="#1-镜像" class="headerlink" title="1.镜像"></a>1.镜像</h2><p>镜像是什么呢？通俗地讲，它是一个<strong>只读的文件和文件夹组合</strong>。它包含了容器运行时所需要的所有基础文件和配置信息，是容器启动的基础。所以你想启动一个容器，那首先必须要有一个镜像。镜像是 Docker 容器启动的先决条件。</p>
 <h2 id="2-容器"><a href="#2-容器" class="headerlink" title="2.容器"></a>2.容器</h2><p>容器是什么呢？容器是 Docker 的另一个核心概念。通俗地讲，容器是镜像的运行实体。镜像是<strong>静态的只读文件</strong>，而容器带有运行时需要的可写文件层，并且容器中的进程属于运行状态。即容器运行着真正的应用进程。容器有初建、运行、停止、暂停和删除五种状态。</p>
 <h2 id="3-仓库"><a href="#3-仓库" class="headerlink" title="3.仓库"></a>3.仓库</h2><p>Docker 的镜像仓库类似于代码仓库，用来存储和分发 Docker 镜像。镜像仓库分为公共镜像仓库和私有镜像仓库。</p>
-<h2 id="4-三者之间的联系"><a href="#4-三者之间的联系" class="headerlink" title="4.三者之间的联系"></a>4.三者之间的联系</h2><p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803191543011.png" alt="image-20210803191543011"></p>
+<h2 id="4-三者之间的联系"><a href="#4-三者之间的联系" class="headerlink" title="4.三者之间的联系"></a>4.三者之间的联系</h2><p><img src="/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog\myblog\source_posts\docker基础\image-20210803191543011.png" alt="image-20210803191543011"></p>
 <p>镜像是容器的基石，容器是由镜像创建的。一个镜像可以创建多个容器，容器是镜像运行的实体。仓库就非常好理解了，就是用来存放和分发镜像的。</p>
 <h2 id="5-docker架构"><a href="#5-docker架构" class="headerlink" title="5.docker架构"></a>5.docker架构</h2><p>OCI全称为开放容器标准（Open Container Initiative），它是一个轻量级、开放的治理结构。OCI组织在 Linux 基金会的大力支持下，于 2015 年 6 月份正式注册成立。基金会旨在为用户围绕工业化容器的格式和镜像运行时，制定一个开放的容器标准。目前主要有两个标准文档：容器运行时标准 （runtime spec）和容器镜像标准（image spec）</p>
-<p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803192120989.png" alt="image-20210803192120989"></p>
+<p><img src="/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog\myblog\source_posts\docker基础\image-20210803192120989.png" alt="image-20210803192120989"></p>
 <p>我们可以看到，Docker 整体架构采用 C/S（客户端 / 服务器）模式，主要由客户端和服务端两大部分组成。客户端负责发送操作指令，服务端负责接收和处理指令。客户端和服务端通信有多种方式，既可以在同一台机器上通过UNIX套接字通信，也可以通过网络连接远程通信。</p>
 <p>下面我逐一介绍客户端和服务端。</p>
 <p>Docker 客户端<br>Docker 客户端其实是一种泛称。其中 docker 命令是 Docker 用户与 Docker 服务端交互的主要方式。除了使用 docker 命令的方式，还可以使用直接请求 REST API 的方式与 Docker 服务端交互，甚至还可以使用各种语言的 SDK 与 Docker 服务端交互。</p>
 <p>Docker 服务端<br>Docker 服务端是 Docker 所有后台服务的统称。其中 dockerd 是一个非常重要的后台管理进程，它负责响应和处理来自 Docker 客户端的请求，然后将客户端的请求转化为 Docker 的具体操作。例如镜像、容器、网络和挂载卷等具体对象的操作和管理。</p>
 <h2 id="6-docker重要组件"><a href="#6-docker重要组件" class="headerlink" title="6.docker重要组件"></a>6.docker重要组件</h2><p><strong>runC</strong>是 Docker 官方按照 OCI 容器运行时标准的一个实现。通俗地讲，runC 是一个用来运行容器的轻量级工具，是真正用来运行容器的。</p>
-<p><strong>containerd</strong>是 Docker <img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803192333997.png" alt="image-20210803192333997">服务端的一个核心组件，它是从dockerd中剥离出来的 ，它的诞生完全遵循 OCI 标准，是容器标准化后的产物。containerd通过 containerd-shim 启动并管理 runC，可以说containerd真正管理了容器的生命周期。</p>
+<p><strong>containerd</strong>是 Docker <img src="/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog\myblog\source_posts\docker基础\image-20210803192333997.png" alt="image-20210803192333997">服务端的一个核心组件，它是从dockerd中剥离出来的 ，它的诞生完全遵循 OCI 标准，是容器标准化后的产物。containerd通过 containerd-shim 启动并管理 runC，可以说containerd真正管理了容器的生命周期。</p>
 <h1 id="四容器基本操作"><a href="#四容器基本操作" class="headerlink" title="四容器基本操作"></a>四容器基本操作</h1><h2 id="1-容器是什么"><a href="#1-容器是什么" class="headerlink" title="1.容器是什么"></a>1.容器是什么</h2><p>容器是基于镜像创建的可运行实例，并且单独存在，一个镜像可以创建出多个容器。运行容器化环境时，实际上是在容器内部创建该文件系统的读写副本。 这将添加一个容器层，该层允许修改镜像的整个副本。如图 1 所示。</p>
 <p><img src="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png" alt="image.png"></p>
 <h2 id="2-容器生命周期"><a href="#2-容器生命周期" class="headerlink" title="2.容器生命周期"></a>2.容器生命周期</h2><p>created：初建状态</p>
@@ -486,7 +488,7 @@
 <p>（4）合理选择基础镜像<br>容器的核心是应用，因此只要基础镜像能够满足应用的运行环境即可。例如一个Java类型的应用运行时只需要JRE，并不需要JDK，因此我们的基础镜像只需要安装JRE环境即可。</p>
 <p>（5）使用 .dockerignore 文件<br>在使用git时，我们可以使用.gitignore文件忽略一些不需要做版本管理的文件。同理，使用.dockerignore文件允许我们在构建时，忽略一些不需要参与构建的文件，从而提升构建效率。.dockerignore的定义类似于.gitignore。</p>
 <p>.dockerignore的本质是文本文件，Docker 构建时可以使用换行符来解析文件定义，每一行可以忽略一些文件或者文件夹。具体使用方式如下：</p>
-<p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803193001795-16279902022581.png" alt="image-20210803193001795"></p>
+<p><img src="/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog\myblog\source_posts\docker基础\image-20210803193001795-16279902022581.png" alt="image-20210803193001795"></p>
 <p>Docker 构建过程中，每一条 Dockerfile 指令都会提交为一个镜像层，下一条指令都是基于上一条指令构建的。如果构建时发现要构建的镜像层的父镜像层已经存在，并且下一条命令使用了相同的指令，即可命中构建缓存。</p>
 <p>Docker 构建时判断是否需要使用缓存的规则如下：</p>
 <p>从当前构建层开始，比较所有的子镜像，检查所有的构建指令是否与当前完全一致，如果不一致，则不使用缓存；</p>
@@ -534,10 +536,10 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RUN wget -O /tmp/memtester-4.3.0.tar.gz http://pyropus.ca/software/memtester/old-versions/memtester-4.3.0.tar.gz \</span><br><span class="line">&amp;&amp; tar -xvf /tmp/memtester-4.3.0.tar.gz -C /tmp \</span><br><span class="line">&amp;&amp; make -C /tmp/memtester-4.3.0 &amp;&amp; make -C /tmp/memtester-4.3.0 install</span><br></pre></td></tr></table></figure>
 
 <p>（4）WORKDIR<br>为了使构建过程更加清晰明了，推荐使用 WORKDIR 来指定容器的工作路径，应该尽量避免使用 RUN cd /work/path &amp;&amp; do some work 这样的指令。</p>
-<h1 id="六基于内核的弱隔离系统保障安全"><a href="#六基于内核的弱隔离系统保障安全" class="headerlink" title="六基于内核的弱隔离系统保障安全"></a>六基于内核的弱隔离系统保障安全</h1><h2 id="1-docker和虚拟机的区别"><a href="#1-docker和虚拟机的区别" class="headerlink" title="1.docker和虚拟机的区别"></a>1.docker和虚拟机的区别</h2><p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210803193709025.png" alt="image-20210803193709025"></p>
+<h1 id="六基于内核的弱隔离系统保障安全"><a href="#六基于内核的弱隔离系统保障安全" class="headerlink" title="六基于内核的弱隔离系统保障安全"></a>六基于内核的弱隔离系统保障安全</h1><h2 id="1-docker和虚拟机的区别"><a href="#1-docker和虚拟机的区别" class="headerlink" title="1.docker和虚拟机的区别"></a>1.docker和虚拟机的区别</h2><p><img src="/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog\myblog\source_posts\docker基础\image-20210803193709025.png" alt="image-20210803193709025"></p>
 <p>从图 1 可以看出，虚拟机是通过管理系统(Hypervisor)模拟出 CPU、内存、网络等硬件，然后在这些模拟的硬件上创建客户内核和操作系统。这样做的好处就是虚拟机有自己的内核和操作系统，并且硬件都是通过虚拟机管理系统模拟出来的，用户程序无法直接使用到主机的操作系统和硬件资源，因此虚拟机也对隔离性和安全性有着更好的保证。</p>
 <p>而 Docker 容器则是通过 Linux 内核的 Namespace 技术实现了文件系统、进程、设备以及网络的隔离，然后再通过 Cgroups 对 CPU、 内存等资源进行限制，最终实现了容器之间相互不受影响，由于容器的隔离性仅仅依靠内核来提供，因此容器的隔离性也远弱于虚拟机。容器与虚拟机相比，容器的性能损耗非常小，并且镜像也非常小，而且在业务快速开发和迭代的今天，容器秒级的启动等特性也非常匹配业务快速迭代的业务场景。</p>
-<h2 id="2-Docker-容器的安全问题"><a href="#2-Docker-容器的安全问题" class="headerlink" title="2.Docker 容器的安全问题"></a>2.Docker 容器的安全问题</h2><p><img src="/2021/08/13/docker/blog\myblog\source_posts\docker\image-20210804141705077.png" alt="image-20210804141705077"></p>
+<h2 id="2-Docker-容器的安全问题"><a href="#2-Docker-容器的安全问题" class="headerlink" title="2.Docker 容器的安全问题"></a>2.Docker 容器的安全问题</h2><p><img src="/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog\myblog\source_posts\docker基础\image-20210804141705077.png" alt="image-20210804141705077"></p>
 <p>七容器监控：容器监控原理及 cAdvisor 的安装与使用</p>
 <p>监控原理</p>
 <p>我们知道 Docker 是基于 Namespace、Cgroups 和联合文件系统实现的。其中 Cgroups 不仅可以用于容器资源的限制，还可以提供容器的资源使用率。无论何种监控方案的实现，底层数据都来源于 Cgroups。</p>
