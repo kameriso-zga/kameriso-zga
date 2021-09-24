@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ipvs详解 | Hexo</title>
+  <title>json 和protobuf区别 | Hexo</title>
   <meta name="keywords" content="">
-  <meta name="description" content="ipvs详解 | Hexo">
+  <meta name="description" content="json 和protobuf区别 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="go append数据扩容">
@@ -416,9 +416,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-ipvs详解" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-json-和protobuf区别" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">ipvs详解</h1>
+        <h1 class="article-title">json 和protobuf区别</h1>
     
     <div class="article-meta">
         
@@ -428,7 +428,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-19 14:46:50'>2021-08-10 14:21</time>
+            Created At : <time class="date" title='Updated At: 2021-09-24 16:10:22'>2021-09-24 15:56</time>
         
     </div>
     <div class="article-meta">
@@ -450,7 +450,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ipvs%E5%90%AB%E4%B9%89"><span class="toc-text">ipvs含义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">1.工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AFLVS"><span class="toc-text">2.什么是LVS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-IPVS-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.IPVS 代理模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ipvs%E5%92%8Ciptables%E5%8C%BA%E5%88%AB"><span class="toc-text">4.ipvs和iptables区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ipvs-kube-proxy%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-text">5.ipvs kube-proxy原理分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-text">6.总结</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="toc-text">内存占用</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -466,41 +466,44 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="ipvs含义"><a href="#ipvs含义" class="headerlink" title="ipvs含义"></a>ipvs含义</h1><p>IPVS基本上是一种高效的Layer-4交换机，它提供<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9F%E8%BD%BD%E5%B9%B3%E8%A1%A1">负载平衡</a>的功能。当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS不用检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一些应用中后端的服务器可能功能不一，有的是提供HTML文档的Web服务器，有的是提供图片的Web服务器，有的是提供CGI的Web服务器。这时，就需要基于内容请求分发 (Content-Based Request Distribution)，同时基于内容请求分发可以提高后端服务器上访问的局部性。</p>
-<h2 id="1-工作原理"><a href="#1-工作原理" class="headerlink" title="1.工作原理"></a>1.工作原理</h2><p>当一个TCP连接的初始SYN报文到达时，IPVS就选择一台服务器，将报文转发给它。此后通过查发报文的IP和TCP报文头地址，保证此连接的后继报文被转发到相同的服务器。这样，IPVS无法检查到请求的内容再选择服务器，这就要求后端的服务器组是提供相同的服务，不管请求被送到哪一台服务器，返回结果都应该是一样的。但是在有一些应用中后端&gt;的服务器可能功能不一，有的是提供HTML文档的Web服务器，有的是提供图片的Web服务器，有的是提供CGI的Web服务器。这时，就需要基于内容请求分发 (Content-Based Request Distribution)，同时基于内容请求分发可以提高后端服务器上访问的局部性。</p>
-<p>上面已经说了IPVS是LVS的关键，因为LVS的IP负载平衡技术就是通过IPVS模块来实现的，IPVS是LVS集群系统的核心软件，它的主要作用是：安装在Director Server上，同时&gt;在Director Server上虚拟出一个IP地址，用户必须通过这个虚拟的IP地址访问服务。这个虚拟IP一般称为LVS的VIP，即Virtual IP。访问的请求首先经过VIP到达负载调度器，然&gt;后由负载调度器从Real Server列表中选取一个服务节点响应用户的请求。</p>
-<h2 id="2-什么是LVS"><a href="#2-什么是LVS" class="headerlink" title="2.什么是LVS"></a>2.什么是LVS</h2><p>提到IPVS就不得不提<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/LVS">LVS</a>（Linux Virtual Server），虚拟服务器是一个高度可扩展性和高可用性的服务器，建立在一个集群的服务器中。服务器集群的架构对用户是完全透明的，并且用户使用起来感觉它只有一个高性能<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%99%9A%E6%8B%9F%E6%9C%8D%E5%8A%A1%E5%99%A8/5799459">虚拟服务器</a>。</p>
-<p>真正的服务器和负载平衡器之间通过<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%AB%98%E9%80%9F%E5%B1%80%E5%9F%9F%E7%BD%91/2172818">高速局域网</a>或地理上分散的广域网可以相互连接。负载平衡器可以将请求调度到不同的服务器并将并行的集群服务显示的像在一个单一的IP地址上的一个虚拟的服务，请求调度可以使用IP负载平衡技术或应用级负载平衡技术。系统的可扩展性是通过透明地添加或删除集群中的节点来实现的。通过检测节点或守护进程的失败和适当地重新配置系统提供高可用性。</p>
-<h2 id="3-IPVS-代理模式"><a href="#3-IPVS-代理模式" class="headerlink" title="3.IPVS 代理模式"></a>3.IPVS 代理模式</h2><p>在 <code>ipvs</code> 模式下，kube-proxy 监视 Kubernetes 服务和端点，调用 <code>netlink</code> 接口相应地创建 IPVS 规则， 并定期将 IPVS 规则与 Kubernetes 服务和端点同步。 该控制循环可确保IPVS 状态与所需状态匹配。访问服务时，IPVS 将流量定向到后端Pod之一。</p>
-<p>IPVS代理模式基于类似于 iptables 模式的 netfilter 挂钩函数， 但是使用哈希表作为基础数据结构，并且在内核空间中工作。 这意味着，与 iptables 模式下的 kube-proxy 相比，IPVS 模式下的 kube-proxy 重定向通信的延迟要短，并且在同步代理规则时具有更好的性能。 与其他代理模式相比，IPVS 模式还支持更高的网络流量吞吐量。</p>
-<p>IPVS 提供了更多选项来平衡后端 Pod 的流量。 这些是：</p>
+        <p>c</p>
+<p>测试接口得时候，用到了protobuf，对比下，json和protobuf区别，发现使用场景不一样。传输速度不一样。</p>
+<p>下面写一下区别：</p>
+<p>1.什么是protobuf</p>
+<p>protobuf是客户端和后台开发都很常见的一套开源库，本文通过分析protobuf序列化后的二进制流，更深入的理解protobuf，解答开发中常见的问题。</p>
+<p>（1）protobuf是google开发的一个数据传输格式，类似json<br>（2）protobuf是二进制的、结构化的，所以比json的数据量更小，也更对象化<br>（3）protobuf不是像json直接明文的，这个是定义对象结构，然后由protbuf库去把对象自动转换成二进制，用的时候再自动反解过来的。传输对我们是透明的！我们只管传输的对象就可以了</p>
+<p>2.基本用法</p>
+<p>支持多种语言，主要是序列化反序列化</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test.proto</span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">Request</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">optional</span> <span class="built_in">uint32</span>  cmd     = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">optional</span> <span class="built_in">string</span>  name    = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行： <code>protoc test.proto --cpp_out=.</code></p>
+<p>生成test.pb.h和test.pb.cc后，就可以在代码中使用了</p>
+<p>发送方赋值，并序列化：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Request Req;</span><br><span class="line">Req.set_cmd(<span class="number">1234</span>);</span><br><span class="line">Req.set_name(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">string</span> content;</span><br><span class="line">Req.SerializeToString(&amp;content);</span><br></pre></td></tr></table></figure>
+
+<p>对方收到后，反序列化：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request Req;</span><br><span class="line">Req.ParseFromString(content);</span><br></pre></td></tr></table></figure>
+
+<p>就可以得到每一个字段值了。<br>要想深入了解其具体是怎么实现的，就需要分析其序列化后的二进制字节流。</p>
+<p>3.pb字节流</p>
+<p>3.1基本结构</p>
+<p>protobuf序列化后的字节流并不复杂，其基本结构就是多个字段顺序拼接而成。<br>对于每一个字段，包括3个部分，即：<strong>id type value</strong></p>
+<p>如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">optional</span> <span class="built_in">uint32</span>  cmd     = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其id即1，type为0（表示变长整型，见后详述），value即设置的值如1234</p>
+<p>整个字节流拼接后就是如下结构（示意）：</p>
+<p><img src="https://km-pro-1258638997.cos.ap-guangzhou.myqcloud.com/files/photos/pictures/201901/1546410160_40_w630_h145.png?sign=q-sign-algorithm=sha1&q-ak=AKIDLVP3QWLuCDxYtCEzUjhOpyqQjlW0C8nB&q-sign-time=1632470470;1632472330&q-key-time=1632470470;1632472330&q-header-list=host&q-url-param-list=&q-signature=5305b61b95d5cada92cd70b8379eb2eb12d77122" alt="img"></p>
+<p>注意没有包头、包尾之类，直接就是包体内容，这点不像其它很多协议如tcp、udp等。</p>
+<p>实际上，由于id和type这两个数字一般都不大，存储时是合并成一个数字的，低3位是type，其它高位是id，即：<br>(id &lt;&lt; 3) | type，我们暂且称之为tag，那么真实的结构就是这样的：<br><img src="https://km-pro-1258638997.cos.ap-guangzhou.myqcloud.com/files/photos/pictures/201901/1546410171_72_w630_h145.png?sign=q-sign-algorithm=sha1&q-ak=AKIDLVP3QWLuCDxYtCEzUjhOpyqQjlW0C8nB&q-sign-time=1632470470;1632472330&q-key-time=1632470470;1632472330&q-header-list=host&q-url-param-list=&q-signature=60926a57fb66ec281aebcdce995c36f2f5d9c858" alt="img"><br>google设计时，为type只留了3个位，即最多只支持8个type，包括int、string等，完整列表见后。</p>
+<p>4.pb与json区别</p>
+<p>这里直接放总结了。</p>
 <ul>
-<li><code>rr</code>：轮替（Round-Robin）</li>
-<li><code>lc</code>：最少链接（Least Connection），即打开链接数量最少者优先</li>
-<li><code>dh</code>：目标地址哈希（Destination Hashing）</li>
-<li><code>sh</code>：源地址哈希（Source Hashing）</li>
-<li><code>sed</code>：最短预期延迟（Shortest Expected Delay）</li>
-<li><code>nq</code>：从不排队（Never Queue）</li>
+<li>次数在1千以下，ProtoBuf 的编码与解码性能，都与JSON不相上下，甚至还有比JSON差的趋势。</li>
+<li>次数在2千以上，ProtoBuf的编码解码性能，都比JSON高出很多。</li>
+<li>次数在10万以上，ProtoBuf的编解码性能就很明显了，远远高出JSON的性能。</li>
 </ul>
-<blockquote>
-<p><strong>说明：</strong></p>
-<p>要在 IPVS 模式下运行 kube-proxy，必须在启动 kube-proxy 之前使 IPVS 在节点上可用。</p>
-<p>当 kube-proxy 以 IPVS 代理模式启动时，它将验证 IPVS 内核模块是否可用。 如果未检测到 IPVS 内核模块，则 kube-proxy 将退回到以 iptables 代理模式运行。</p>
-</blockquote>
-<h2 id="4-ipvs和iptables区别"><a href="#4-ipvs和iptables区别" class="headerlink" title="4.ipvs和iptables区别"></a>4.ipvs和iptables区别</h2><ul>
-<li><p>ipvs 为大型集群提供了更好的可扩展性和性能</p>
-</li>
-<li><p>ipvs 支持比 iptables 更复杂的复制均衡算法（最小负载、最少连接、加权等等）</p>
-</li>
-<li><p>ipvs 支持服务器健康检查和连接重试等功</p>
-<h2 id="5-ipvs-kube-proxy原理分析："><a href="#5-ipvs-kube-proxy原理分析：" class="headerlink" title="5.ipvs kube-proxy原理分析："></a>5.ipvs kube-proxy原理分析：</h2><p>先前基于iptables规则表的DNAT-&gt;SNAT方式来处理外部客户端到k8s集群pod内的流量<br> 和集群内部流量(cluster-ip到pod ip)，无需在宿主机上管理cluster-ip都由iptables来进行<br> 管理。</p>
-<p>使用IPVS是需要对vs(虚拟服务也就是vip)进行管理，由于IPVS的DNAT钩子挂在<br> INPUT链上，因此必须要让内核识别 VIP(cluster-ip) 是本机的 IP。k8s 通过设置将<br> service cluster ip 绑定到虚拟网卡kube-ipvs0，其中下面的10.96.x.x都是VIP，也就<br> 是cluster-ip。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/11025663-9f8434a93bc6ec27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/909/format/webp" alt="img"></p>
-<p>ipvs 会使用 iptables 进行包过滤、SNAT、masquared(伪装)。具体来说，ipvs 将使用<br> ipset来存储需要DROP或masquared的流量的源或目标地址，以确保 iptables 规则的<br> 数量是恒定的，这样我们就不需要关心我们有多少服务了。</p>
-<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6.总结"></a>6.总结</h2><p>这种的LB方式和之前分析的swarm集群中LB类似都是用lvs来直接进行负载，这比起原先使用iptables来进行负载在性能上要好的多，同时也比较清晰友好。总之一句话流量都是要先经过iptables清理一遍然后交给4层的lvs进行负载。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/11025663-3395c8a02bb1c76d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080/format/webp" alt="img"></p>
-</li>
-</ul>
+<h5 id="内存占用"><a href="#内存占用" class="headerlink" title="内存占用"></a>内存占用</h5><p>ProtoBuf的内存34，而JSON到达106 ，ProtoBuf的内存占用只有JSON的1/3.</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
