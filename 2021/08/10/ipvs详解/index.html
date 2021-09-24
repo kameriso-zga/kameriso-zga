@@ -6,25 +6,15 @@
   <meta name="keywords" content="">
   <meta name="description" content="ipvs详解 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker基础">
-<meta property="og:url" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="go append数据扩容">
+<meta property="og:url" content="http://example.com/2021/08/24/go-append%E6%95%B0%E6%8D%AE%E6%89%A9%E5%AE%B9/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一 Docker基本概念1.docker是什么Docker 是一个用于开发，发布和运行应用程序的开放平台。通俗地讲，Docker 类似于集装箱。在一艘大船上，各种货物要想被整齐摆放并且相互不受到影响，我们就需要把各种货物进行集装箱标准化。 2.容器技术原理（1）chroot chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803191543011.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803192120989.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803192333997.png">
-<meta property="og:image" content="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803193001795-16279902022581.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803193709025.png">
-<meta property="og:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210804141705077.png">
-<meta property="article:published_time" content="2021-08-13T10:33:49.000Z">
-<meta property="article:modified_time" content="2021-08-13T10:41:10.986Z">
+<meta property="article:published_time" content="2021-08-24T08:12:45.000Z">
+<meta property="article:modified_time" content="2021-08-24T08:12:45.967Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/13/docker%E5%9F%BA%E7%A1%80/blog/myblog/source_posts/docker基础/image-20210803191543011.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -250,7 +240,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(7)</small>
+                <small>(9)</small>
             
         </div>
     </li>
@@ -275,7 +265,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="7">
+<input type="hidden" id="yelog_site_posts_number" value="9">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -327,6 +317,22 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="All "
+           href="/2021/08/24/go-append%E6%95%B0%E6%8D%AE%E6%89%A9%E5%AE%B9/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="go append数据扩容">go append数据扩容</span>
+            <span class="post-date" title="2021-08-24 16:12:45">2021/08/24</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="计算机网络笔记">计算机网络笔记</span>
+            <span class="post-date" title="2021-08-19 17:26:16">2021/08/19</span>
+        </a>
         
         <a  class="All "
            href="/2021/08/13/docker%E5%9F%BA%E7%A1%80/"
@@ -414,7 +420,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-13 17:05:19'>2021-08-10 14:21</time>
+            Created At : <time class="date" title='Updated At: 2021-08-19 14:46:50'>2021-08-10 14:21</time>
         
     </div>
     <div class="article-meta">
@@ -479,8 +485,7 @@
 <li><p>ipvs 支持比 iptables 更复杂的复制均衡算法（最小负载、最少连接、加权等等）</p>
 </li>
 <li><p>ipvs 支持服务器健康检查和连接重试等功</p>
-</li>
-<li><h2 id="5-ipvs-kube-proxy原理分析："><a href="#5-ipvs-kube-proxy原理分析：" class="headerlink" title="5.ipvs kube-proxy原理分析："></a>5.ipvs kube-proxy原理分析：</h2><p>先前基于iptables规则表的DNAT-&gt;SNAT方式来处理外部客户端到k8s集群pod内的流量<br> 和集群内部流量(cluster-ip到pod ip)，无需在宿主机上管理cluster-ip都由iptables来进行<br> 管理。</p>
+<h2 id="5-ipvs-kube-proxy原理分析："><a href="#5-ipvs-kube-proxy原理分析：" class="headerlink" title="5.ipvs kube-proxy原理分析："></a>5.ipvs kube-proxy原理分析：</h2><p>先前基于iptables规则表的DNAT-&gt;SNAT方式来处理外部客户端到k8s集群pod内的流量<br> 和集群内部流量(cluster-ip到pod ip)，无需在宿主机上管理cluster-ip都由iptables来进行<br> 管理。</p>
 <p>使用IPVS是需要对vs(虚拟服务也就是vip)进行管理，由于IPVS的DNAT钩子挂在<br> INPUT链上，因此必须要让内核识别 VIP(cluster-ip) 是本机的 IP。k8s 通过设置将<br> service cluster ip 绑定到虚拟网卡kube-ipvs0，其中下面的10.96.x.x都是VIP，也就<br> 是cluster-ip。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/11025663-9f8434a93bc6ec27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/909/format/webp" alt="img"></p>
 <p>ipvs 会使用 iptables 进行包过滤、SNAT、masquared(伪装)。具体来说，ipvs 将使用<br> ipset来存储需要DROP或masquared的流量的源或目标地址，以确保 iptables 规则的<br> 数量是恒定的，这样我们就不需要关心我们有多少服务了。</p>
