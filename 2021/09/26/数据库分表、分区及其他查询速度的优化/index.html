@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>计算机网络笔记 | Hexo</title>
+  <title>数据库分表、分区及其他查询速度的优化 | Hexo</title>
   <meta name="keywords" content="">
-  <meta name="description" content="计算机网络笔记 | Hexo">
+  <meta name="description" content="数据库分表、分区及其他查询速度的优化 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="l 背景：之前写的项目出现一个Bug,造成拼接orm的where条件失败 代码块： 12345678910111213141516171819202122func setQueryCondition(querytype bool, req *open_mysql_proxy.ForwardMysqlOrderReq,	statement *orm.Statement) error &amp;#123;	v">
 <meta property="og:type" content="article">
@@ -436,9 +436,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-计算机网络笔记" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-数据库分表、分区及其他查询速度的优化" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">计算机网络笔记</h1>
+        <h1 class="article-title">数据库分表、分区及其他查询速度的优化</h1>
     
     <div class="article-meta">
         
@@ -448,7 +448,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-20 14:44:40'>2021-08-19 17:26</time>
+            Created At : <time class="date" title='Updated At: 2021-09-26 16:16:41'>2021-09-26 16:08</time>
         
     </div>
     <div class="article-meta">
@@ -486,12 +486,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p>ip addr和ifconfig区别</p>
-<p>运用不用得工具分别是：netools和iproute2</p>
-<p>ip addr显示得内容以网卡为单位，每个网卡配一个ip地址</p>
-</li>
-</ol>
+        <p>l</p>
+<p>背景：之前写的项目出现一个Bug,造成拼接orm的where条件失败</p>
+<p>代码块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">func setQueryCondition(querytype bool, req *open_mysql_proxy.ForwardMysqlOrderReq,</span><br><span class="line">	statement *orm.Statement) error &#123;</span><br><span class="line">	var err error</span><br><span class="line">	var where = orm.WhereCond&#123;&#125;</span><br><span class="line">	for _, v := range req.Where &#123;</span><br><span class="line">		//valueInt32 := Int64ToInt(v.Value)</span><br><span class="line">		var value []int64</span><br><span class="line">		if strings.Contains(v.Field, &quot;appid&quot;) &#123;</span><br><span class="line">			value, err = OpenAppid2Appid(v.Value)</span><br><span class="line">			if err != nil &#123;</span><br><span class="line">				return err</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		if len(value) &gt; 1 &#123;</span><br><span class="line">			where[v.Field] = value</span><br><span class="line">		&#125;</span><br><span class="line">		if len(value) == 1 &#123;</span><br><span class="line">			where[v.Field] = value[0]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码块中只对appid进行处理了，其他的条件没有处理。造成了len(value)==0</p>
+<p>orm where拼接条件为空</p>
+<p>修改代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func setQueryCondition(querytype bool, req *open_mysql_proxy.ForwardMysqlOrderReq,</span><br><span class="line">	statement *orm.Statement) error &#123;</span><br><span class="line">	var err error</span><br><span class="line">	var where = orm.WhereCond&#123;&#125;</span><br><span class="line">	for _, v := range req.Where &#123;</span><br><span class="line">		//valueInt32 := Int64ToInt(v.Value)</span><br><span class="line">		var value []int64</span><br><span class="line">		if strings.Contains(v.Field, &quot;appid&quot;) &#123;</span><br><span class="line">			value, err = OpenAppid2Appid(v.Value)</span><br><span class="line">			if err != nil &#123;</span><br><span class="line">				return err</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			value = v.Value</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if len(value) &gt; 1 &#123;</span><br><span class="line">			where[v.Field] = value</span><br><span class="line">		&#125;</span><br><span class="line">		if len(value) == 1 &#123;</span><br><span class="line">			where[v.Field] = value[0]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改代码后造成，除appid的数据进入后。原本数据量很大，这里造成查询速度很慢。</p>
+<p>有两种策略：1.分区 2.分表</p>
+<p>最后选择的策略：分区</p>
+<p>原因：原有数据本来在一张表内，分表的话需要重新修改表配置，比较麻烦；选择分区，创建索引值appid，因为代码快里面是对appid进行区分，所以索引值设置为appid，速度快。看看分区后：</p>
+<p><img src="/2021/09/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E8%A1%A8%E3%80%81%E5%88%86%E5%8C%BA%E5%8F%8A%E5%85%B6%E4%BB%96%E6%9F%A5%E8%AF%A2%E9%80%9F%E5%BA%A6%E7%9A%84%E4%BC%98%E5%8C%96/image-20210926161634156.png" alt="image-20210926161634156"></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
