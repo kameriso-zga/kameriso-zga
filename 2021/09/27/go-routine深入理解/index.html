@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>go append数据扩容 | Hexo</title>
+  <title>go routine深入理解 | Hexo</title>
   <meta name="keywords" content="">
-  <meta name="description" content="go append数据扩容 | Hexo">
+  <meta name="description" content="go routine深入理解 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="一、区分进程、线程、协程区别 进程：一个程序需要启动一个线程来跑。 线城：线程是进程的单元，最小数量是1，可以解决cpu的利用问题。进程内的子任务叫做线程， 可以执行多个任务，列入：同时打开网页、听歌、看电影.. 协程：协程是一种用户态的轻量级线程，协程的调度完全由用户控制（进程和线程都是由cpu 内核进行调度）。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在">
 <meta property="og:type" content="article">
@@ -442,9 +442,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="posts-go-append数据扩容" class="article article-type-posts" itemscope itemprop="blogPost">
+        <article id="post-go-routine深入理解" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">go append数据扩容</h1>
+        <h1 class="article-title">go routine深入理解</h1>
     
     <div class="article-meta">
         
@@ -454,7 +454,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-08-24 16:12:45'>2021-08-24 16:12</time>
+            Created At : <time class="date" title='Updated At: 2021-09-27 18:27:43'>2021-09-27 17:00</time>
         
     </div>
     <div class="article-meta">
@@ -492,7 +492,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><strong>一、区分进程、线程、协程区别</strong></p>
+<p>进程：一个程序需要启动一个线程来跑。</p>
+<p>线城：线程是进程的单元，最小数量是1，可以解决cpu的利用问题。进程内的子任务叫做线程，</p>
+<p>可以执行多个任务，列入：同时打开网页、听歌、看电影..</p>
+<p>协程：协程是一种用户态的轻量级线程，协程的调度完全由用户控制（进程和线程都是由cpu 内核进行调度）。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，直接操作栈则基本没有内核切换的开销，可以不加锁的访问全局变量，所以上下文的切换非常快。</p>
+<p>二、<strong>goroutine 和协程区别</strong></p>
+<p>goroutine 就是协程。 不同的是，Golang 在 runtime、系统调用等多方面对 goroutine 调度进行了封装和处理，当遇到长时间执行或者进行系统调用时，会主动把当前 goroutine 的CPU (P) 转让出去，让其他 goroutine 能被调度并执行。</p>
+<p>优点：</p>
+<p>内存消耗方面<br> 每个 goroutine (协程) 默认占用内存远比 Java 、C 的线程少。<br> goroutine：<strong>2KB</strong>（官方）<br> 线程：8MB（参考网络）</p>
+<p>线程和 goroutine 切换调度开销方面<br> <strong>线程/goroutine 切换开销方面</strong>，goroutine 远比线程小<br> 线程：涉及模式切换(从用户态切换到内核态)、16个寄存器、PC、SP…等寄存器的刷新等。<br> goroutine：只有三个寄存器的值修改 - PC / SP / DX.</p>
+<p>三、go rountine几种方式</p>
+<p>1、go rountine通信两种方式：共享内存（ <code>sync.Mutex</code>）、channel（消息传递）</p>
+<p>四、go在什么情况下会切换线程</p>
+<p>(1)、当一个goroutine阻塞：如遇到系统调用、互斥锁或channel。阻塞的goroutine会进入睡眠或者进入调度队列，允许Go调度或运行其他等待中的goroutine。channel数据缓存为0</p>
+<p>（2）、在函数调用期间，如果goroutine必须增加其堆栈。这个中断允许Go调度其他的goroutine避免正在运行的goroutine占用CPU。</p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
